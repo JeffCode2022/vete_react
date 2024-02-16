@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react';
 import Error from './Error'
+import Success from './Success'
 
 const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
-    const [nombre, setNombre] = useState('');
+    const [mascota, setMascota] = useState('');
     const [propietario, setPropietario] = useState('');
     const [email, setEmail] = useState('');
     const [fecha, setFecha] = useState('');
     const [sintomas, setSintomas] = useState('');
 
     const [error, setError] = useState(false)
+    const [success, setSuccess] = useState(false)
 
-    useEffect(() => {
+    useEffect(() => {   
         if( Object.keys(paciente).length > 0  ) {
-            setNombre(paciente.nombre)
+            setMascota(paciente.mascota)
             setPropietario(paciente.propietario)
             setEmail(paciente.email)
             setFecha(paciente.fecha)
@@ -33,19 +35,23 @@ const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
         e.preventDefault();
 
         // Validación del Formulario
-        if( [ nombre, propietario, email, fecha, sintomas ].includes('') ) {
+        if( [ mascota, propietario, email, fecha, sintomas ].includes('') ) {
             console.log('Hay Al Menos un campo vacio')
 
             setError(true)
+            setSuccess(false)
+
             return;
+
         } 
         
         setError(false)
+        setSuccess(true)
 
 
         // Objeto de Paciente
         const objetoPaciente = {
-            nombre, 
+            mascota, 
             propietario, 
             email, 
             fecha, 
@@ -67,7 +73,7 @@ const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
         }
 
         // Reiniciar el form
-        setNombre('')
+        setMascota('')
         setPropietario('')
         setEmail('')
         setFecha('')
@@ -89,23 +95,27 @@ const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
                 className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
             >
                 { error &&  <Error><p>Todos los campos son obligatorios</p></Error>}
+                { success && <Success type="success"><p>Registro Exitoso</p></Success>}
+              
+
+                
                 <div className="mb-5">
                     <label htmlFor="mascota" className="block text-gray-700 uppercase font-bold">
-                        Nombre Mascota
+                        Nombre Mascota 🐹
                     </label>
                     <input
                         id="mascota"
                         type="text"
                         placeholder="Nombre de la Mascota"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-                        value={nombre}
-                        onChange={ (e) => setNombre(e.target.value) }
+                        value={mascota}
+                        onChange={ (e) => setMascota(e.target.value) }
                     />  
                 </div>
 
                 <div className="mb-5">
                     <label htmlFor="propietario" className="block text-gray-700 uppercase font-bold">
-                        Nombre Propietario
+                        Nombre Propietario 👨🏽‍🦱
                     </label>
                     <input
                         id="propietario"
@@ -119,7 +129,7 @@ const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
 
                 <div className="mb-5">
                     <label htmlFor="email" className="block text-gray-700 uppercase font-bold">
-                        Email
+                        Email 📧
                     </label>
                     <input
                         id="email"
@@ -133,7 +143,7 @@ const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
 
                 <div className="mb-5">
                     <label htmlFor="alta" className="block text-gray-700 uppercase font-bold">
-                        Alta
+                        Alta 📆
                     </label>
                     <input
                         id="alta"
@@ -146,7 +156,7 @@ const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
 
                 <div className="mb-5">
                     <label htmlFor="sintomas" className="block text-gray-700 uppercase font-bold">
-                        Síntomas
+                        Síntomas 😷
                     </label>
                     <textarea 
                         id="sintomas"
